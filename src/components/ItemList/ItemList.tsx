@@ -1,28 +1,23 @@
-import { useState } from 'react';
+import React from 'react';
+import {FixedSizeList as List} from 'react-window';
 
-interface ItemListProps {
-  items: string[];
-}
+export default function ItemList() {
 
-const ItemList = ({ items }: ItemListProps) => {
-  const [list, setList] = useState<string[]>(items);
-
-  const handleDelete = (index: number) => {
-    const newList = [...list];
-    newList.splice(index, 1);
-    setList(newList);
-  };
+const Row = ({index, style}: {index: number, style: React.CSSProperties}) => (
+	<div className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
+		Row {index}
+	</div>
+)
 
   return (
-    <ul>
-      {list.map((item, index) => (
-        <li key={index}>
-          {item}
-          <button onClick={() => handleDelete(index)}>Delete</button>
-        </li>
-      ))}
-    </ul>
+    <List
+				className="List"
+				height={150}
+				itemCount={1000}
+				itemSize={35}
+				width={300}
+			>
+				{Row}
+			</List>
   );
 };
-
-export default ItemList;
